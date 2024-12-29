@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
+import FirefliesConfigForm from './FirefliesConfig';
+import MeetingSelector from './MeetingSelector';
+import type { FirefliesConfig, FirefliesMeeting } from '../config/fireflies';
 
 interface Props {
   formData: any;
@@ -414,6 +417,9 @@ const ProposalForm: React.FC<Props> = ({
   handleSubmit,
   onBack 
 }) => {
+  const [firefliesConfig, setFirefliesConfig] = useState<FirefliesConfig | null>(null);
+  const [selectedMeetings, setSelectedMeetings] = useState<FirefliesMeeting[]>([]);
+
   const handleChange = (field: string) => (value: string) => {
     if (field.includes('deliverables.')) {
       const [_, index, prop] = field.split('.');
@@ -484,6 +490,29 @@ const ProposalForm: React.FC<Props> = ({
         onChange={handleChange('context')}
         multiline
       />
+
+      <div style={{ marginBottom: '20px' }}>
+        <FirefliesConfigForm onConfigSave={setFirefliesConfig} />
+        {firefliesConfig && (
+          <MeetingSelector 
+            apiKey={firefliesConfig.apiKey}
+            onMeetingsSelected={(meetings) => {
+              // Combine all meeting transcripts and summaries into the context
+              const contextFromMeetings = meetings.map(meeting => `
+Meeting: ${meeting.title}
+Date: ${new Date(meeting.date).toLocaleDateString()}
+${meeting.summary ? `\nSummary:\n${meeting.summary}` : ''}
+${meeting.transcript ? `\nTranscript:\n${meeting.transcript}` : ''}
+-------------------
+`).join('\n');
+              
+              // Update the context field with the meeting information
+              onChange('context', formData.context + '\n\n' + contextFromMeetings);
+              setSelectedMeetings(meetings);
+            }}
+          />
+        )}
+      </div>
 
       <FormField
         label="TIMELINE"
