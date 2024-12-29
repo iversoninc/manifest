@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import ProposalForm from '../../components/ProposalForm';
-import ProposalPreview from '../../components/ProposalPreview';
-import { PDFDownloadLink } from '@react-pdf/renderer';
-import PdfDocument from '../../components/PdfDocument';
+import { ProposalPreview } from '../../components/ProposalPreview';
+import html2pdf from 'html2pdf.js';
 
 const STORAGE_KEY = 'proposals';
 
@@ -26,7 +25,7 @@ const defaultProposal = {
 const styles = {
   main: {
     minHeight: '100vh',
-    backgroundColor: '#000',
+    backgroundColor: '#0C0C0D',
     color: '#fff',
     display: 'flex',
     flexDirection: 'column' as const
@@ -39,7 +38,7 @@ const styles = {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: '#000'
+    backgroundColor: '#0C0C0D'
   },
   formContainer: {
     flex: 'none',
@@ -57,11 +56,11 @@ const styles = {
   }
 };
 
-export default function EditProposal() {
+const EditProposal = () => {
   const router = useRouter();
   const { id } = router.query;
-
   const [formData, setFormData] = useState(defaultProposal);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -77,7 +76,6 @@ export default function EditProposal() {
               deliverables: Array.isArray(proposal.deliverables) ? proposal.deliverables : []
             });
           } else {
-            // If proposal not found, redirect to home
             router.replace('/');
           }
         } catch (error) {
@@ -95,7 +93,6 @@ export default function EditProposal() {
     };
     setFormData(updatedData);
     
-    // Save changes to localStorage
     const savedProposals = localStorage.getItem(STORAGE_KEY);
     if (savedProposals) {
       try {
@@ -105,19 +102,23 @@ export default function EditProposal() {
         );
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedProposals));
       } catch (error) {
-        console.error('Error saving changes:', error);
+        console.error('Error saving proposal:', error);
       }
     }
   };
 
   const addDeliverable = () => {
+    const newDeliverable = {
+      title: '',
+      description: '',
+      cost: ''
+    };
     const updatedData = {
       ...formData,
-      deliverables: [...(formData.deliverables || []), { title: '', description: '', cost: '' }]
+      deliverables: [...formData.deliverables, newDeliverable]
     };
     setFormData(updatedData);
     
-    // Save changes to localStorage
     const savedProposals = localStorage.getItem(STORAGE_KEY);
     if (savedProposals) {
       try {
@@ -127,19 +128,20 @@ export default function EditProposal() {
         );
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedProposals));
       } catch (error) {
-        console.error('Error saving changes:', error);
+        console.error('Error saving proposal:', error);
       }
     }
   };
 
   const removeDeliverable = (index: number) => {
+    const updatedDeliverables = [...formData.deliverables];
+    updatedDeliverables.splice(index, 1);
     const updatedData = {
       ...formData,
-      deliverables: formData.deliverables.filter((_: any, i: number) => i !== index)
+      deliverables: updatedDeliverables
     };
     setFormData(updatedData);
     
-    // Save changes to localStorage
     const savedProposals = localStorage.getItem(STORAGE_KEY);
     if (savedProposals) {
       try {
@@ -149,38 +151,70 @@ export default function EditProposal() {
         );
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedProposals));
       } catch (error) {
-        console.error('Error saving changes:', error);
+        console.error('Error saving proposal:', error);
       }
     }
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const generatePDF = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const doc = <PdfDocument data={formData} />;
-    return (
-      <PDFDownloadLink 
-        document={doc}
-        fileName={`${formData.client}_proposal.pdf`}
-      >
-        {({ blob, url, loading, error }) => {
-          if (loading) return 'Loading document...';
-          if (error) return 'Error generating PDF!';
-          if (url) {
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `${formData.client}_proposal.pdf`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-          }
-          return null;
-        }}
-      </PDFDownloadLink>
-    );
+    if (isGenerating) return;
+    setIsGenerating(true);
+
+    try {
+      // Save current state
+      const savedProposals = localStorage.getItem(STORAGE_KEY);
+      if (savedProposals) {
+        const proposals = JSON.parse(savedProposals);
+        const updatedProposals = proposals.map((p: any) => 
+          p.id === formData.id ? formData : p
+        );
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedProposals));
+      }
+
+      // Create a temporary div for the PDF content
+      const element = document.createElement('div');
+      element.style.backgroundColor = '#111';
+      element.style.padding = '40px';
+      element.style.color = '#fff';
+
+      // Render the proposal preview into the temporary div
+      const previewElement = document.createElement('div');
+      element.appendChild(previewElement);
+      
+      // Use ReactDOM to render the preview
+      const ReactDOM = (await import('react-dom')).default;
+      ReactDOM.render(<ProposalPreview proposal={formData} />, previewElement);
+
+      // Generate and download the PDF
+      const opt = {
+        margin: 0,
+        filename: `${formData.title || 'proposal'}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { 
+          scale: 2,
+          backgroundColor: '#111',
+          windowWidth: 1200
+        },
+        jsPDF: { 
+          unit: 'mm', 
+          format: 'a4', 
+          orientation: 'portrait',
+          compress: true,
+          putOnlyUsedFonts: true,
+          floatPrecision: 16
+        }
+      };
+
+      await html2pdf().set(opt).from(element).save();
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   const handleBack = () => {
-    // Save current state
     const savedProposals = localStorage.getItem(STORAGE_KEY);
     if (savedProposals) {
       try {
@@ -193,9 +227,7 @@ export default function EditProposal() {
         console.error('Error saving proposal:', error);
       }
     }
-    
-    // Use direct window location change instead of Next.js router
-    window.location.href = '/';
+    router.push('/');
   };
 
   return (
@@ -207,14 +239,16 @@ export default function EditProposal() {
             onChange={handleChange}
             addDeliverable={addDeliverable}
             removeDeliverable={removeDeliverable}
-            handleSubmit={handleSubmit}
+            handleSubmit={generatePDF}
             onBack={handleBack}
           />
         </div>
         <div style={styles.previewContainer}>
-          <ProposalPreview data={formData} />
+          <ProposalPreview proposal={formData} />
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default EditProposal;

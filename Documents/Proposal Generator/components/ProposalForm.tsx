@@ -157,57 +157,49 @@ const styles = {
     fontSize: '12px'
   },
   bottomBar: {
-    position: 'fixed' as const,
+    position: 'fixed',
     bottom: 0,
     left: 0,
-    width: '50%', // Take up left half of the screen
-    height: '64px',
-    backgroundColor: '#000',
-    borderTop: '1px solid #333333',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    width: '50%',
     padding: '16px',
-    zIndex: 1000,
-    backdropFilter: 'blur(10px)'
+    backgroundColor: '#0C0C0D',
+    borderTop: '1px solid #333',
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: '16px',
+    zIndex: 100
   },
   backButton: {
+    height: '36px',
+    padding: '0px 16px',
     backgroundColor: 'transparent',
     border: 'none',
-    color: '#666',
-    cursor: 'pointer',
-    padding: '8px 16px',
+    borderRadius: '8px',
+    color: '#cccccc',
     fontSize: '14px',
-    transition: 'color 0.2s ease-in-out',
-    ':hover': {
-      color: '#fff'
-    }
+    cursor: 'pointer',
+    transition: 'all 0.2s ease'
   },
   submitButton: {
-    backgroundColor: '#333',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '4px',
-    padding: '8px 16px',
+    height: '36px',
+    padding: '0px 16px',
+    backgroundColor: '#1A1A1A',
+    border: '1px solid #333',
+    borderRadius: '8px',
+    color: '#F2F2F2',
     fontSize: '14px',
     cursor: 'pointer',
-    transition: 'background-color 0.2s ease-in-out',
-    ':hover': {
-      backgroundColor: '#444'
-    }
+    transition: 'all 0.2s ease'
   },
   generateButton: {
-    padding: '8px 12px',
+    height: '36px',
+    padding: '0px 16px',
     backgroundColor: '#F2F2F2',
     color: '#1A1A1A',
     border: '1px solid transparent',
     borderRadius: '8px',
     cursor: 'pointer',
     fontSize: '13px',
-    fontFamily: 'var(--font-monument)',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
     transition: 'all 0.2s ease'
   },
   toggleContainer: {
@@ -217,44 +209,42 @@ const styles = {
     paddingBottom: '20px'
   },
   toggle: {
-    width: '44px',
-    height: '24px',
-    backgroundColor: '#1A1A1A',
-    borderRadius: '12px',
+    width: '40px',
+    height: '20px',
+    backgroundColor: '#333',
+    borderRadius: '10px',
     position: 'relative' as const,
     cursor: 'pointer',
-    transition: 'all 0.2s ease',
-    ':hover': {
-      border: '1px solid #333'
-    }
-  },
-  toggleCircle: {
-    width: '18px',
-    height: '18px',
-    backgroundColor: '#333333',
-    borderRadius: '50%',
-    position: 'absolute' as const,
-    top: '3px',
-    left: '3px',
-    transition: 'all 0.2s ease'
-  },
-  toggleCircleHover: {
-    backgroundColor: '#404040'
+    transition: 'background-color 0.2s ease'
   },
   toggleActive: {
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#fff'
+  },
+  toggleCircle: {
+    width: '16px',
+    height: '16px',
+    backgroundColor: '#666',
+    borderRadius: '50%',
+    position: 'absolute' as const,
+    top: '2px',
+    left: '2px',
+    transition: 'all 0.2s ease'
   },
   toggleCircleActive: {
-    backgroundColor: '#000000',
+    backgroundColor: '#0C0C0D',
     transform: 'translateX(20px)'
+  },
+  toggleCircleHover: {
+    backgroundColor: '#999'
   },
   toggleCircleActiveHover: {
     backgroundColor: '#262626'
   },
   toggleLabel: {
     fontSize: '14px',
-    fontFamily: 'var(--font-monument)',
-    color: '#F2F2F2'
+    color: '#999',
+    cursor: 'pointer',
+    userSelect: 'none' as const
   },
   titleBar: {
     display: 'flex',
@@ -272,6 +262,62 @@ const styles = {
     fontFamily: 'var(--font-monument-semi-mono)',
     color: '#727272',
     letterSpacing: '0.5px'
+  },
+  section: {
+    marginBottom: '40px'
+  },
+  sectionTitle: {
+    fontSize: '18px',
+    fontFamily: 'var(--font-monument-semi-mono)',
+    color: '#727272',
+    letterSpacing: '0.5px',
+    marginBottom: '16px'
+  }
+};
+
+interface FormData {
+  title: string;
+  client: string;
+  date: string;
+  context: string;
+  timeline: string;
+  process: string;
+  deliverablesPreface: string;
+  deliverables: Array<{
+    title: string;
+    description: string;
+    cost: string;
+  }>;
+  includeTermination: boolean;
+  termination: string;
+  includeCopyright: boolean;
+  copyright: string;
+  signature: {
+    name: string;
+    title: string;
+    company: string;
+    date: string;
+  };
+}
+
+const defaultFormData: FormData = {
+  title: '',
+  client: '',
+  date: '',
+  context: '',
+  timeline: '',
+  process: '',
+  deliverablesPreface: '',
+  deliverables: [],
+  includeTermination: false,
+  termination: '',
+  includeCopyright: false,
+  copyright: '',
+  signature: {
+    name: '',
+    title: '',
+    company: '',
+    date: ''
   }
 };
 
@@ -377,6 +423,9 @@ const ProposalForm: React.FC<Props> = ({
         [prop]: value
       };
       onChange('deliverables', updatedDeliverables);
+    } else if (field.includes('signature.')) {
+      const [_, prop] = field.split('.');
+      onChange('signature', { ...formData.signature, [prop]: value });
     } else {
       onChange(field, value);
     }
@@ -395,6 +444,9 @@ const ProposalForm: React.FC<Props> = ({
       onChange('termination', defaultTermination);
     }
   }, [formData.includeTermination]);
+
+  const [isHoveringTermination, setIsHoveringTermination] = useState(false);
+  const [isHoveringCopyright, setIsHoveringCopyright] = useState(false);
 
   return (
     <form onSubmit={handleSubmit} style={styles.form}>
@@ -545,45 +597,25 @@ const ProposalForm: React.FC<Props> = ({
         multiline
       />
 
-      <div style={styles.toggleContainer}>
+      <div style={{ ...styles.formGroup, marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '12px' }}>
         <div 
           style={{
             ...styles.toggle,
             ...(formData.includeTermination ? styles.toggleActive : {})
           }}
-          onClick={() => {
-            onChange('includeTermination', !formData.includeTermination);
-            if (!formData.includeTermination) {
-              onChange('termination', defaultTermination);
-            } else {
-              onChange('termination', '');
-            }
-          }}
-          onMouseEnter={(e) => {
-            const circle = e.currentTarget.children[0] as HTMLElement;
-            if (formData.includeTermination) {
-              circle.style.backgroundColor = '#262626';
-            } else {
-              circle.style.backgroundColor = '#404040';
-            }
-          }}
-          onMouseLeave={(e) => {
-            const circle = e.currentTarget.children[0] as HTMLElement;
-            if (formData.includeTermination) {
-              circle.style.backgroundColor = '#000000';
-            } else {
-              circle.style.backgroundColor = '#333333';
-            }
-          }}
+          onClick={() => handleChange('includeTermination')(!formData.includeTermination)}
         >
-          <div 
+          <div
             style={{
               ...styles.toggleCircle,
-              ...(formData.includeTermination ? styles.toggleCircleActive : {})
+              ...(formData.includeTermination ? styles.toggleCircleActive : {}),
+              ...(isHoveringTermination ? (formData.includeTermination ? styles.toggleCircleActiveHover : styles.toggleCircleHover) : {})
             }}
+            onMouseEnter={() => setIsHoveringTermination(true)}
+            onMouseLeave={() => setIsHoveringTermination(false)}
           />
         </div>
-        <label style={styles.toggleLabel}>Include termination language</label>
+        <label style={styles.toggleLabel}>Include Termination Language</label>
       </div>
 
       {formData.includeTermination && (
@@ -595,53 +627,25 @@ const ProposalForm: React.FC<Props> = ({
         />
       )}
 
-      <div style={styles.toggleContainer}>
+      <div style={{ ...styles.formGroup, marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '12px' }}>
         <div 
           style={{
             ...styles.toggle,
             ...(formData.includeCopyright ? styles.toggleActive : {})
           }}
-          onClick={() => {
-            onChange('includeCopyright', !formData.includeCopyright);
-            if (!formData.includeCopyright) {
-              onChange('copyright', `Ownership of Intellectual Property: All intellectual property created, developed, or generated during the course of this product design project, including but not limited to designs, drawings, concepts, prototypes, and any related materials (collectively referred to as the "Work"), shall be the exclusive property of the Contractor until full payment is received from the Client.
-
-Upon receipt of full payment, ownership of the Work, including all copyrights, shall be transferred to the Client
-
-The Client acknowledges that prior to full payment, they may not use, reproduce, distribute, or create derivative works from the Work without express written permission from the Contractor.
-
-The Contractor warrants that the Work will be original and will not infringe upon the intellectual property rights of any third party.
-
-The Client agrees to indemnify and hold the Contractor harmless against any third-party claims or legal actions related to the use of the Work after full ownership has been transferred, other than claims alleging a violation of Contractor's warranties.`);
-            } else {
-              onChange('copyright', '');
-            }
-          }}
-          onMouseEnter={(e) => {
-            const circle = e.currentTarget.children[0] as HTMLElement;
-            if (formData.includeCopyright) {
-              circle.style.backgroundColor = '#262626';
-            } else {
-              circle.style.backgroundColor = '#404040';
-            }
-          }}
-          onMouseLeave={(e) => {
-            const circle = e.currentTarget.children[0] as HTMLElement;
-            if (formData.includeCopyright) {
-              circle.style.backgroundColor = '#000000';
-            } else {
-              circle.style.backgroundColor = '#333333';
-            }
-          }}
+          onClick={() => handleChange('includeCopyright')(!formData.includeCopyright)}
         >
-          <div 
+          <div
             style={{
               ...styles.toggleCircle,
-              ...(formData.includeCopyright ? styles.toggleCircleActive : {})
+              ...(formData.includeCopyright ? styles.toggleCircleActive : {}),
+              ...(isHoveringCopyright ? (formData.includeCopyright ? styles.toggleCircleActiveHover : styles.toggleCircleHover) : {})
             }}
+            onMouseEnter={() => setIsHoveringCopyright(true)}
+            onMouseLeave={() => setIsHoveringCopyright(false)}
           />
         </div>
-        <label style={styles.toggleLabel}>Include copyright terms</label>
+        <label style={styles.toggleLabel}>Include Copyright Terms</label>
       </div>
 
       {formData.includeCopyright && (
@@ -653,16 +657,92 @@ The Client agrees to indemnify and hold the Contractor harmless against any thir
         />
       )}
 
+      {/* Signature Section */}
+      <div style={styles.section}>
+        <h3 style={styles.sectionTitle}>SIGNATURE</h3>
+        <FormField
+          label="NAME"
+          value={formData.signature?.name || ''}
+          onChange={(value) => handleChange('signature')({ ...formData.signature, name: value })}
+        />
+        <FormField
+          label="TITLE"
+          value={formData.signature?.title || ''}
+          onChange={(value) => handleChange('signature')({ ...formData.signature, title: value })}
+        />
+        <FormField
+          label="COMPANY"
+          value={formData.signature?.company || ''}
+          onChange={(value) => handleChange('signature')({ ...formData.signature, company: value })}
+        />
+        <FormField
+          label="DATE"
+          value={formData.signature?.date || ''}
+          onChange={(value) => handleChange('signature')({ ...formData.signature, date: value })}
+        />
+      </div>
+
       <div style={styles.bottomBar}>
         <button
           type="button"
           style={styles.backButton}
           onClick={onBack}
+          onMouseEnter={(e) => {
+            Object.assign(e.currentTarget.style, {
+              backgroundColor: '#242424',
+              borderColor: '#404040'
+            });
+          }}
+          onMouseLeave={(e) => {
+            Object.assign(e.currentTarget.style, {
+              backgroundColor: 'transparent',
+              borderColor: '#333'
+            });
+          }}
+          onMouseDown={(e) => {
+            Object.assign(e.currentTarget.style, {
+              backgroundColor: '#2A2A2A',
+              transform: 'translateY(1px)'
+            });
+          }}
+          onMouseUp={(e) => {
+            Object.assign(e.currentTarget.style, {
+              backgroundColor: '#242424',
+              transform: 'none'
+            });
+          }}
         >
-          Back to Proposals
+          Back
         </button>
-        <button type="submit" style={styles.submitButton}>
-          Generate PDF
+        <button 
+          type="submit" 
+          style={styles.submitButton}
+          onMouseEnter={(e) => {
+            Object.assign(e.currentTarget.style, {
+              backgroundColor: '#242424',
+              borderColor: '#404040'
+            });
+          }}
+          onMouseLeave={(e) => {
+            Object.assign(e.currentTarget.style, {
+              backgroundColor: '#1A1A1A',
+              borderColor: '#333'
+            });
+          }}
+          onMouseDown={(e) => {
+            Object.assign(e.currentTarget.style, {
+              backgroundColor: '#2A2A2A',
+              transform: 'translateY(1px)'
+            });
+          }}
+          onMouseUp={(e) => {
+            Object.assign(e.currentTarget.style, {
+              backgroundColor: '#242424',
+              transform: 'none'
+            });
+          }}
+        >
+          Create
         </button>
       </div>
     </form>
