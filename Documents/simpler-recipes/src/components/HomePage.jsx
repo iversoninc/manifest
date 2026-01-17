@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import LoadingState from './LoadingState'
 import ErrorState from './ErrorState'
 
@@ -109,8 +109,13 @@ function HomePage() {
           </button>
         </p>
 
-        <footer className="mt-20 text-sand-400 text-sm">
+        <footer className="mt-20 text-sand-400 text-sm space-y-2">
           <p>Works with AllRecipes, Food Network, Serious Eats, and most recipe sites.</p>
+          <p>
+            <Link to="/privacy" className="hover:text-sand-600 transition-colors">
+              Privacy Policy
+            </Link>
+          </p>
         </footer>
       </div>
     </main>
