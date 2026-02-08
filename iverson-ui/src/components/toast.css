@@ -1,0 +1,144 @@
+/* ========================================================================
+   @iverson/ui — Toast / Notification
+   Ephemeral feedback messages with type variants and actions
+   ======================================================================== */
+
+/* -----------------------------------------------------------------------
+   Container — fixed bottom-right stack
+   ----------------------------------------------------------------------- */
+.toast-container {
+  position: fixed;
+  bottom: var(--space-5);
+  right: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  z-index: var(--z-toast);
+  pointer-events: none;
+}
+
+/* -----------------------------------------------------------------------
+   Toast base
+   ----------------------------------------------------------------------- */
+.toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2-5) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  font-family: var(--font-sans);
+  box-shadow: var(--shadow-lg);
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--duration-normal) var(--ease-default),
+    transform var(--duration-normal) var(--ease-default);
+}
+
+.toast-message {
+  flex: 1;
+}
+
+/* -----------------------------------------------------------------------
+   Entrance / Exit states
+   ----------------------------------------------------------------------- */
+.toast-enter {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-exit {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+/* -----------------------------------------------------------------------
+   Type variants
+   ----------------------------------------------------------------------- */
+.toast-default {
+  background-color: var(--color-neutral-900);
+  color: var(--color-white);
+}
+
+.toast-success {
+  background-color: var(--color-success-light);
+  color: var(--color-success-dark);
+  border: 1px solid var(--color-success);
+}
+
+.toast-error {
+  background-color: var(--color-error-light);
+  color: var(--color-error-dark);
+  border: 1px solid var(--color-error);
+}
+
+.toast-warning {
+  background-color: var(--color-warning-light);
+  color: var(--color-warning-dark);
+  border: 1px solid var(--color-warning);
+}
+
+/* -----------------------------------------------------------------------
+   Action button
+   ----------------------------------------------------------------------- */
+.toast-action {
+  background: none;
+  border: none;
+  color: inherit;
+  font-weight: var(--weight-medium);
+  font-size: inherit;
+  font-family: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* -----------------------------------------------------------------------
+   Dark mode
+   ----------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .toast-default {
+    background-color: var(--color-neutral-100);
+    color: var(--color-neutral-900);
+    border: 1px solid var(--color-border);
+  }
+  :root:not([data-theme="light"]) .toast-success {
+    background-color: #0f2a1c;
+    border-color: #1d4a37;
+    color: var(--color-success);
+  }
+  :root:not([data-theme="light"]) .toast-error {
+    background-color: #2a1212;
+    border-color: #4a2424;
+    color: var(--color-error);
+  }
+  :root:not([data-theme="light"]) .toast-warning {
+    background-color: #2a200d;
+    border-color: #4a3b1d;
+    color: var(--color-warning);
+  }
+}
+
+[data-theme="dark"] .toast-default {
+  background-color: var(--color-neutral-100);
+  color: var(--color-neutral-900);
+  border: 1px solid var(--color-border);
+}
+[data-theme="dark"] .toast-success {
+  background-color: #0f2a1c;
+  border-color: #1d4a37;
+  color: var(--color-success);
+}
+[data-theme="dark"] .toast-error {
+  background-color: #2a1212;
+  border-color: #4a2424;
+  color: var(--color-error);
+}
+[data-theme="dark"] .toast-warning {
+  background-color: #2a200d;
+  border-color: #4a3b1d;
+  color: var(--color-warning);
+}

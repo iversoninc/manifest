@@ -1,0 +1,40 @@
+/* ========================================================================
+   @iverson/ui — Breadcrumb
+   Navigation trail with separator
+   ======================================================================== */
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-default);
+}
+
+.breadcrumb-item:hover {
+  color: var(--color-text);
+}
+
+.breadcrumb-item.active {
+  color: var(--color-text);
+  font-weight: var(--weight-medium);
+  pointer-events: none;
+}
+
+.breadcrumb-separator {
+  color: var(--color-text-tertiary);
+  font-size: var(--text-xs);
+  user-select: none;
+}
+
+.breadcrumb-separator::before {
+  content: '/';
+}

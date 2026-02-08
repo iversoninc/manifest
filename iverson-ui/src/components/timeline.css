@@ -1,0 +1,132 @@
+/* ========================================================================
+   @iverson/ui — Timeline / Activity Feed
+   Vertical timeline for project history, activity logs
+   ======================================================================== */
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-left: var(--space-6);
+}
+
+/* Vertical line */
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  background-color: var(--color-border);
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: var(--space-5);
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+/* Dot indicator */
+.timeline-dot {
+  position: absolute;
+  left: calc(-1 * var(--space-6) + 6px);
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-neutral-300);
+  border: 2px solid var(--color-surface);
+  z-index: 1;
+}
+
+.timeline-dot-accent {
+  background-color: var(--color-accent-400);
+}
+
+.timeline-dot-success {
+  background-color: var(--color-success);
+}
+
+.timeline-dot-warning {
+  background-color: var(--color-warning);
+}
+
+.timeline-dot-error {
+  background-color: var(--color-error);
+}
+
+/* Icon dot (larger, for icons) */
+.timeline-dot-icon {
+  width: 24px;
+  height: 24px;
+  left: calc(-1 * var(--space-6));
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-neutral-100);
+}
+
+.timeline-dot-icon svg {
+  width: 12px;
+  height: 12px;
+  color: var(--color-text-secondary);
+}
+
+/* -----------------------------------------------------------------------
+   Content
+   ----------------------------------------------------------------------- */
+.timeline-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.timeline-title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+}
+
+.timeline-time {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}
+
+.timeline-body {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+/* -----------------------------------------------------------------------
+   Dark mode
+   ----------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .timeline::before {
+    background-color: var(--color-border);
+  }
+  :root:not([data-theme="light"]) .timeline-dot {
+    border-color: var(--color-surface);
+    background-color: var(--color-neutral-600);
+  }
+  :root:not([data-theme="light"]) .timeline-dot-icon {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+}
+
+[data-theme="dark"] .timeline::before {
+  background-color: var(--color-border);
+}
+[data-theme="dark"] .timeline-dot {
+  border-color: var(--color-surface);
+  background-color: var(--color-neutral-600);
+}
+[data-theme="dark"] .timeline-dot-icon {
+  background-color: rgba(255, 255, 255, 0.08);
+}

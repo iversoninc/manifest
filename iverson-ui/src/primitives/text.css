@@ -1,0 +1,64 @@
+/* ========================================================================
+   @iverson/ui — Typography primitives
+   Scale classes, semantic text colors, weights
+   ======================================================================== */
+
+/* Type scale */
+.text-xs   { font-size: var(--text-xs);  line-height: var(--leading-normal); }
+.text-sm   { font-size: var(--text-sm);  line-height: var(--leading-normal); }
+.text-base { font-size: var(--text-base); line-height: var(--leading-normal); }
+.text-md   { font-size: var(--text-md);  line-height: var(--leading-normal); }
+.text-lg   { font-size: var(--text-lg);  line-height: var(--leading-snug); letter-spacing: var(--tracking-tight); }
+.text-xl   { font-size: var(--text-xl);  line-height: var(--leading-snug); letter-spacing: var(--tracking-tight); }
+.text-2xl  { font-size: var(--text-2xl); line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); }
+.text-3xl  { font-size: var(--text-3xl); line-height: var(--leading-tight); letter-spacing: var(--tracking-tighter); }
+.text-4xl  { font-size: var(--text-4xl); line-height: var(--leading-none);  letter-spacing: var(--tracking-tighter); }
+
+/* Semantic text colors */
+.text-primary   { color: var(--color-text); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-tertiary  { color: var(--color-text-tertiary); }
+.text-inverse   { color: var(--color-text-inverse); }
+.text-accent    { color: var(--color-text-accent); }
+.text-error     { color: var(--color-text-error); }
+.text-success   { color: var(--color-success); }
+.text-warning   { color: var(--color-warning); }
+
+/* Font weights */
+.font-light    { font-weight: var(--weight-light); }
+.font-normal   { font-weight: var(--weight-normal); }
+.font-medium   { font-weight: var(--weight-medium); }
+.font-semibold { font-weight: var(--weight-semibold); }
+
+/* Font families */
+.font-sans { font-family: var(--font-sans); }
+.font-mono { font-family: var(--font-mono); }
+
+/* Common type patterns */
+.label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-normal);
+  color: var(--color-text);
+}
+
+.caption {
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: var(--color-text-secondary);
+}
+
+.overline {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+}
+
+/* Truncation */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

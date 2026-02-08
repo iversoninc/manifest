@@ -1,0 +1,115 @@
+/* ========================================================================
+   @iverson/ui — Dropdown Menu
+   .dropdown container with .dropdown-menu and .dropdown-item
+   ======================================================================== */
+
+.dropdown {
+  position: relative;
+  display: inline-flex;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + var(--space-1));
+  left: 0;
+  min-width: 180px;
+  padding: var(--space-1);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-dropdown);
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition:
+    opacity var(--duration-fast) var(--ease-default),
+    transform var(--duration-fast) var(--ease-default);
+}
+
+/* Open state — toggled via JS */
+.dropdown.open .dropdown-menu {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Right-aligned variant */
+.dropdown-end .dropdown-menu {
+  left: auto;
+  right: 0;
+}
+
+/* -----------------------------------------------------------------------
+   Items
+   ----------------------------------------------------------------------- */
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-1-5) var(--space-2-5);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-default);
+}
+
+.dropdown-item:hover {
+  background-color: var(--color-neutral-50);
+}
+
+.dropdown-item:active {
+  background-color: var(--color-neutral-100);
+}
+
+.dropdown-item-destructive {
+  color: var(--color-error);
+}
+
+.dropdown-item-destructive:hover {
+  background-color: var(--color-error-light);
+}
+
+/* -----------------------------------------------------------------------
+   Divider
+   ----------------------------------------------------------------------- */
+.dropdown-divider {
+  height: 1px;
+  margin: var(--space-1) 0;
+  background-color: var(--color-border);
+}
+
+/* -----------------------------------------------------------------------
+   Dark mode
+   ----------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .dropdown-menu {
+    background-color: var(--color-surface-raised);
+    border-color: var(--color-border);
+  }
+  :root:not([data-theme="light"]) .dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  :root:not([data-theme="light"]) .dropdown-item:active {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+  :root:not([data-theme="light"]) .dropdown-item-destructive:hover {
+    background-color: #2a1212;
+  }
+}
+
+[data-theme="dark"] .dropdown-menu {
+  background-color: var(--color-surface-raised);
+  border-color: var(--color-border);
+}
+[data-theme="dark"] .dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+[data-theme="dark"] .dropdown-item:active {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+[data-theme="dark"] .dropdown-item-destructive:hover {
+  background-color: #2a1212;
+}

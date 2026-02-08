@@ -1,0 +1,63 @@
+/* ========================================================================
+   @iverson/ui — Table
+   .table with striped and hover variants
+   ======================================================================== */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.table th {
+  text-align: left;
+  padding: var(--space-2-5) var(--space-3);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+  font-size: var(--text-xs);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table td {
+  padding: var(--space-2-5) var(--space-3);
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color var(--duration-fast) var(--ease-default);
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+/* -----------------------------------------------------------------------
+   Striped
+   ----------------------------------------------------------------------- */
+.table-striped tbody tr:nth-child(even) td {
+  background-color: var(--color-neutral-25);
+}
+
+/* -----------------------------------------------------------------------
+   Hover
+   ----------------------------------------------------------------------- */
+.table-hover tbody tr:hover td {
+  background-color: var(--color-neutral-50);
+}
+
+/* -----------------------------------------------------------------------
+   Dark mode
+   ----------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .table-striped tbody tr:nth-child(even) td {
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+  :root:not([data-theme="light"]) .table-hover tbody tr:hover td {
+    background-color: rgba(255, 255, 255, 0.04);
+  }
+}
+
+[data-theme="dark"] .table-striped tbody tr:nth-child(even) td {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+[data-theme="dark"] .table-hover tbody tr:hover td {
+  background-color: rgba(255, 255, 255, 0.04);
+}

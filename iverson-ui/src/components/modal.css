@@ -1,0 +1,135 @@
+/* ========================================================================
+   @iverson/ui — Modal / Dialog
+   Styled native <dialog> with backdrop, sizing, animation
+   ======================================================================== */
+
+.modal {
+  position: fixed;
+  max-width: 480px;
+  width: calc(100% - var(--space-8));
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-xl);
+  color: var(--color-text);
+}
+
+.modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Open animation */
+.modal[open] {
+  animation: modal-in var(--duration-normal) var(--ease-default);
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* -----------------------------------------------------------------------
+   Modal parts
+   ----------------------------------------------------------------------- */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.modal-header h3 {
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+}
+
+.modal-body {
+  padding: var(--space-5);
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--color-border);
+}
+
+/* -----------------------------------------------------------------------
+   Sizes
+   ----------------------------------------------------------------------- */
+.modal-sm {
+  max-width: 360px;
+}
+
+.modal-lg {
+  max-width: 640px;
+}
+
+/* -----------------------------------------------------------------------
+   Mobile — bottom sheet style
+   ----------------------------------------------------------------------- */
+@media (max-width: 639px) {
+  .modal {
+    max-width: 100%;
+    width: 100%;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    margin: 0;
+  }
+
+  .modal[open] {
+    animation: modal-in-mobile var(--duration-normal) var(--ease-default);
+  }
+
+  .modal-sm,
+  .modal-lg {
+    max-width: 100%;
+  }
+}
+
+@keyframes modal-in-mobile {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* -----------------------------------------------------------------------
+   Dark mode
+   ----------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .modal {
+    background-color: var(--color-surface-raised);
+    border-color: var(--color-border);
+  }
+  :root:not([data-theme="light"]) .modal::backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+[data-theme="dark"] .modal {
+  background-color: var(--color-surface-raised);
+  border-color: var(--color-border);
+}
+[data-theme="dark"] .modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+}

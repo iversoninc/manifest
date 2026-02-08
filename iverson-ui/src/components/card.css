@@ -1,0 +1,54 @@
+/* ========================================================================
+   @iverson/ui — Card
+   .card with header/content/footer slots, interactive variant
+   ======================================================================== */
+
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* -----------------------------------------------------------------------
+   Slots
+   ----------------------------------------------------------------------- */
+.card-header {
+  padding: var(--space-5) var(--space-5) 0;
+}
+
+.card-content {
+  padding: var(--space-5);
+}
+
+.card-header + .card-content {
+  padding-top: var(--space-3);
+}
+
+.card-footer {
+  padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--color-border);
+}
+
+/* -----------------------------------------------------------------------
+   Interactive variant
+   ----------------------------------------------------------------------- */
+.card-interactive {
+  cursor: pointer;
+  box-shadow: var(--shadow-xs);
+  transition:
+    transform var(--duration-fast) var(--ease-default),
+    box-shadow var(--duration-fast) var(--ease-default),
+    border-color var(--duration-fast) var(--ease-default);
+}
+
+.card-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-border-hover);
+}
+
+.card-interactive:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-xs);
+}

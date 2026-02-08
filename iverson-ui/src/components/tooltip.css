@@ -1,0 +1,51 @@
+/* ========================================================================
+   @iverson/ui — Tooltip
+   CSS-only via [data-tooltip] attribute
+   Usage: <button data-tooltip="Hint text">Hover me</button>
+   ======================================================================== */
+
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-normal);
+  white-space: nowrap;
+  color: var(--color-white);
+  background-color: var(--color-neutral-900);
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity var(--duration-fast) var(--ease-default),
+    transform var(--duration-fast) var(--ease-default);
+  z-index: var(--z-tooltip, 45);
+}
+
+[data-tooltip]:hover::before {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* -----------------------------------------------------------------------
+   Dark mode
+   ----------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) [data-tooltip]::before {
+    background-color: var(--color-neutral-100);
+    color: var(--color-neutral-950);
+  }
+}
+
+[data-theme="dark"] [data-tooltip]::before {
+  background-color: var(--color-neutral-100);
+  color: var(--color-neutral-950);
+}

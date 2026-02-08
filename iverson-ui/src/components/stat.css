@@ -1,0 +1,103 @@
+/* ========================================================================
+   @iverson/ui — Stat Card
+   Number + label + optional trend for dashboards
+   ======================================================================== */
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-5);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.stat-label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.stat-value {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+  letter-spacing: var(--tracking-tighter);
+  line-height: var(--leading-none);
+}
+
+.stat-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.stat-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+}
+
+.stat-trend-up {
+  color: var(--color-success);
+}
+
+.stat-trend-down {
+  color: var(--color-error);
+}
+
+.stat-trend-neutral {
+  color: var(--color-text-tertiary);
+}
+
+.stat-trend svg {
+  width: 14px;
+  height: 14px;
+}
+
+.stat-description {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}
+
+/* -----------------------------------------------------------------------
+   Stat group — grid of stats
+   ----------------------------------------------------------------------- */
+.stat-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-4);
+}
+
+/* -----------------------------------------------------------------------
+   Mobile — smaller stat values
+   ----------------------------------------------------------------------- */
+@media (max-width: 639px) {
+  .stat {
+    padding: var(--space-4);
+  }
+
+  .stat-value {
+    font-size: var(--text-2xl);
+  }
+}
+
+/* -----------------------------------------------------------------------
+   Dark mode
+   ----------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .stat {
+    background-color: var(--color-surface);
+    border-color: var(--color-border);
+  }
+}
+
+[data-theme="dark"] .stat {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+}

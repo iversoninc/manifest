@@ -1,0 +1,174 @@
+/* ========================================================================
+   @iverson/ui — Progress Bar & Stepper
+   Linear progress indicator and multi-step flow
+   ======================================================================== */
+
+/* -----------------------------------------------------------------------
+   Progress Bar
+   ----------------------------------------------------------------------- */
+.progress {
+  width: 100%;
+  height: 6px;
+  background-color: var(--color-neutral-100);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: var(--color-neutral-900);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-slow) var(--ease-default);
+}
+
+/* Variants */
+.progress-accent .progress-bar {
+  background-color: var(--color-accent-500);
+}
+
+.progress-success .progress-bar {
+  background-color: var(--color-success);
+}
+
+.progress-warning .progress-bar {
+  background-color: var(--color-warning);
+}
+
+.progress-error .progress-bar {
+  background-color: var(--color-error);
+}
+
+/* Sizes */
+.progress-sm {
+  height: 4px;
+}
+
+.progress-lg {
+  height: 8px;
+}
+
+/* Indeterminate */
+.progress-indeterminate .progress-bar {
+  width: 40% !important;
+  animation: progress-indeterminate 1.5s var(--ease-gentle) infinite;
+}
+
+@keyframes progress-indeterminate {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(350%); }
+}
+
+/* -----------------------------------------------------------------------
+   Stepper
+   ----------------------------------------------------------------------- */
+.stepper {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.stepper-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+}
+
+.stepper-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  background-color: var(--color-neutral-100);
+  color: var(--color-text-secondary);
+  position: relative;
+  z-index: 1;
+  transition:
+    background-color var(--duration-fast) var(--ease-default),
+    color var(--duration-fast) var(--ease-default);
+}
+
+.stepper-step.active .stepper-indicator {
+  background-color: var(--color-neutral-900);
+  color: var(--color-text-inverse);
+}
+
+.stepper-step.completed .stepper-indicator {
+  background-color: var(--color-success);
+  color: var(--color-white);
+}
+
+.stepper-label {
+  margin-top: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  text-align: center;
+}
+
+.stepper-step.active .stepper-label {
+  color: var(--color-text);
+  font-weight: var(--weight-medium);
+}
+
+.stepper-step.completed .stepper-label {
+  color: var(--color-text-secondary);
+}
+
+/* Connector line between steps */
+.stepper-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: calc(50% + 18px);
+  width: calc(100% - 36px);
+  height: 2px;
+  background-color: var(--color-neutral-200);
+}
+
+.stepper-step.completed:not(:last-child)::after {
+  background-color: var(--color-success);
+}
+
+/* -----------------------------------------------------------------------
+   Dark mode
+   ----------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .progress {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+  :root:not([data-theme="light"]) .progress-bar {
+    background-color: var(--color-neutral-100);
+  }
+  :root:not([data-theme="light"]) .stepper-indicator {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+  :root:not([data-theme="light"]) .stepper-step.active .stepper-indicator {
+    background-color: var(--color-neutral-100);
+    color: var(--color-neutral-950);
+  }
+  :root:not([data-theme="light"]) .stepper-step:not(:last-child)::after {
+    background-color: var(--color-border);
+  }
+}
+
+[data-theme="dark"] .progress {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+[data-theme="dark"] .progress-bar {
+  background-color: var(--color-neutral-100);
+}
+[data-theme="dark"] .stepper-indicator {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+[data-theme="dark"] .stepper-step.active .stepper-indicator {
+  background-color: var(--color-neutral-100);
+  color: var(--color-neutral-950);
+}
+[data-theme="dark"] .stepper-step:not(:last-child)::after {
+  background-color: var(--color-border);
+}

@@ -1,0 +1,85 @@
+/* ========================================================================
+   @iverson/ui — Pagination
+   Page navigation for data tables and lists
+   ======================================================================== */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.pagination-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    color var(--duration-fast) var(--ease-default),
+    background-color var(--duration-fast) var(--ease-default);
+  border: none;
+  background: none;
+  text-decoration: none;
+}
+
+.pagination-item:hover {
+  color: var(--color-text);
+  background-color: var(--color-neutral-50);
+}
+
+.pagination-item.active {
+  color: var(--color-text);
+  background-color: var(--color-neutral-100);
+  font-weight: var(--weight-medium);
+}
+
+.pagination-item:disabled,
+.pagination-item[disabled] {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.pagination-item svg {
+  width: 16px;
+  height: 16px;
+}
+
+.pagination-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  font-size: var(--text-sm);
+  color: var(--color-text-tertiary);
+  pointer-events: none;
+}
+
+.pagination-ellipsis::before {
+  content: '...';
+}
+
+/* -----------------------------------------------------------------------
+   Dark mode
+   ----------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .pagination-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  :root:not([data-theme="light"]) .pagination-item.active {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+}
+
+[data-theme="dark"] .pagination-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+[data-theme="dark"] .pagination-item.active {
+  background-color: rgba(255, 255, 255, 0.08);
+}

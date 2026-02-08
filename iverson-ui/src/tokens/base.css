@@ -1,0 +1,319 @@
+/* ========================================================================
+   @iverson/ui — Design Tokens
+   All CSS custom properties: colors, spacing, typography, radius, shadows, motion
+   ======================================================================== */
+
+/* -----------------------------------------------------------------------
+   @font-face — TWK Continental
+   ----------------------------------------------------------------------- */
+@font-face {
+  font-family: 'TWK Continental';
+  src: url('/fonts/TWKContinental-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TWK Continental';
+  src: url('/fonts/TWKContinental-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TWK Continental';
+  src: url('/fonts/TWKContinental-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* -----------------------------------------------------------------------
+     Colors — Warm-tinted neutral scale
+     Undertone: slight warm (yellowish-brown) for premium feel
+     ----------------------------------------------------------------------- */
+  --color-white: #ffffff;
+  --color-neutral-0: #ffffff;
+  --color-neutral-25: #fcfcfb;
+  --color-neutral-50: #f9f8f7;
+  --color-neutral-100: #f3f2f0;
+  --color-neutral-200: #eae8e4;
+  --color-neutral-300: #d5d3ce;
+  --color-neutral-400: #b0ada6;
+  --color-neutral-500: #8b877f;
+  --color-neutral-600: #6e6b63;
+  --color-neutral-700: #55524b;
+  --color-neutral-800: #3d3b36;
+  --color-neutral-900: #282723;
+  --color-neutral-950: #1a1917;
+
+  /* Accent — Brand green (#00FE7F) derived scale */
+  --color-accent-50: #effef6;
+  --color-accent-100: #d0fde4;
+  --color-accent-200: #a4f9cb;
+  --color-accent-300: #63f0a8;
+  --color-accent-400: #00FE7F;
+  --color-accent-500: #00d46b;
+  --color-accent-600: #00ad58;
+  --color-accent-700: #008a46;
+  --color-accent-800: #006d38;
+  --color-accent-900: #005a2e;
+
+  /* Semantic — Success (muted teal-green, distinct from accent) */
+  --color-success-light: #f3faf6;
+  --color-success: #4a9a6b;
+  --color-success-dark: #3a7d56;
+
+  /* Semantic — Warning (soft amber) */
+  --color-warning-light: #fdf9f0;
+  --color-warning: #c49243;
+  --color-warning-dark: #9e7535;
+
+  /* Semantic — Error (muted red) */
+  --color-error-light: #fdf4f4;
+  --color-error: #c45353;
+  --color-error-dark: #a33e3e;
+
+  /* -----------------------------------------------------------------------
+     Surface aliases
+     ----------------------------------------------------------------------- */
+  --color-bg: var(--color-neutral-25);
+  --color-surface: var(--color-white);
+  --color-surface-raised: var(--color-white);
+  --color-border: var(--color-neutral-200);
+  --color-border-hover: var(--color-neutral-300);
+
+  /* -----------------------------------------------------------------------
+     Text aliases
+     ----------------------------------------------------------------------- */
+  --color-text: var(--color-neutral-900);
+  --color-text-secondary: var(--color-neutral-600);
+  --color-text-tertiary: var(--color-neutral-400);
+  --color-text-inverse: var(--color-white);
+  --color-text-accent: var(--color-accent-700);
+  --color-text-error: var(--color-error);
+
+  /* -----------------------------------------------------------------------
+     Typography
+     ----------------------------------------------------------------------- */
+  --font-sans: 'TWK Continental', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+
+  /* Font sizes */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.8125rem;  /* 13px */
+  --text-base: 0.875rem; /* 14px */
+  --text-md: 1rem;       /* 16px */
+  --text-lg: 1.125rem;   /* 18px */
+  --text-xl: 1.25rem;    /* 20px */
+  --text-2xl: 1.5rem;    /* 24px */
+  --text-3xl: 1.875rem;  /* 30px */
+  --text-4xl: 2.5rem;    /* 40px */
+
+  /* Line heights */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+
+  /* Letter spacing — tighter on larger sizes for premium feel */
+  --tracking-tighter: -0.04em;
+  --tracking-tight: -0.025em;
+  --tracking-normal: -0.011em;
+  --tracking-wide: 0.025em;
+
+  /* Font weights (TWK Continental: Light 300, Regular 400, Medium 500) */
+  --weight-light: 300;
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 500;
+
+  /* -----------------------------------------------------------------------
+     Spacing
+     ----------------------------------------------------------------------- */
+  --space-0: 0;
+  --space-0-5: 0.125rem;  /* 2px */
+  --space-1: 0.25rem;     /* 4px */
+  --space-1-5: 0.375rem;  /* 6px */
+  --space-2: 0.5rem;      /* 8px */
+  --space-2-5: 0.625rem;  /* 10px */
+  --space-3: 0.75rem;     /* 12px */
+  --space-3-5: 0.875rem;  /* 14px */
+  --space-4: 1rem;        /* 16px */
+  --space-5: 1.25rem;     /* 20px */
+  --space-6: 1.5rem;      /* 24px */
+  --space-7: 1.75rem;     /* 28px */
+  --space-8: 2rem;        /* 32px */
+  --space-9: 2.25rem;     /* 36px */
+  --space-10: 2.5rem;     /* 40px */
+  --space-12: 3rem;       /* 48px */
+  --space-14: 3.5rem;     /* 56px */
+  --space-16: 4rem;       /* 64px */
+  --space-20: 5rem;       /* 80px */
+  --space-24: 6rem;       /* 96px */
+
+  /* -----------------------------------------------------------------------
+     Border radius
+     ----------------------------------------------------------------------- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* -----------------------------------------------------------------------
+     Shadows — Layered: tight/dark + wide/soft per level
+     ----------------------------------------------------------------------- */
+  --shadow-xs:
+    0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm:
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md:
+    0 2px 4px rgba(0, 0, 0, 0.06),
+    0 4px 8px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg:
+    0 4px 6px rgba(0, 0, 0, 0.05),
+    0 10px 20px -2px rgba(0, 0, 0, 0.1);
+  --shadow-xl:
+    0 8px 10px rgba(0, 0, 0, 0.04),
+    0 20px 40px -4px rgba(0, 0, 0, 0.12);
+  --shadow-focus:
+    0 0 0 3px rgba(0, 0, 0, 0.06);
+
+  /* -----------------------------------------------------------------------
+     Motion
+     ----------------------------------------------------------------------- */
+  /* Easing */
+  --ease-default: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-emphasis: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-gentle: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  /* Duration */
+  --duration-instant: 75ms;
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --duration-slower: 500ms;
+
+  /* -----------------------------------------------------------------------
+     Z-index scale
+     ----------------------------------------------------------------------- */
+  --z-base: 0;
+  --z-raised: 1;
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-overlay: 30;
+  --z-modal: 40;
+  --z-toast: 50;
+
+  /* -----------------------------------------------------------------------
+     Breakpoints (for reference — cannot use custom properties in @media)
+     sm: 640px   — small screens, phones
+     md: 768px   — tablets, small laptops
+     lg: 1024px  — desktops
+     ----------------------------------------------------------------------- */
+}
+
+/* =========================================================================
+   Dark mode — override alias tokens only
+   Triggered by OS preference OR manual [data-theme="dark"] attribute
+   ========================================================================= */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    /* Surfaces — very deep, near-black */
+    --color-bg: #0a0a09;
+    --color-surface: #111110;
+    --color-surface-raised: #191918;
+    --color-border: #2a2926;
+    --color-border-hover: #3d3b36;
+
+    /* Text — high contrast on deep blacks */
+    --color-text: #ededec;
+    --color-text-secondary: #8b877f;
+    --color-text-tertiary: #55524b;
+    --color-text-inverse: var(--color-neutral-950);
+    --color-text-accent: var(--color-accent-400);
+    --color-text-error: #d98888;
+
+    /* Semantic backgrounds — very dark tinted */
+    --color-success-light: #0a1a10;
+    --color-warning-light: #1a1308;
+    --color-error-light: #1a0e0e;
+
+    /* Semantic — muted for dark mode */
+    --color-success: #5daa7d;
+    --color-warning: #cda05a;
+    --color-error: #d07070;
+
+    /* Shadows — near-invisible on deep dark, rely on border contrast */
+    --shadow-xs:
+      0 1px 2px rgba(0, 0, 0, 0.5);
+    --shadow-sm:
+      0 1px 2px rgba(0, 0, 0, 0.6),
+      0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-md:
+      0 2px 4px rgba(0, 0, 0, 0.5),
+      0 4px 8px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg:
+      0 4px 6px rgba(0, 0, 0, 0.5),
+      0 10px 20px -2px rgba(0, 0, 0, 0.5);
+    --shadow-xl:
+      0 8px 10px rgba(0, 0, 0, 0.5),
+      0 20px 40px -4px rgba(0, 0, 0, 0.6);
+    --shadow-focus:
+      0 0 0 3px rgba(255, 255, 255, 0.06);
+  }
+}
+
+/* Manual override — always wins */
+[data-theme="dark"] {
+  /* Surfaces — very deep, near-black */
+  --color-bg: #0a0a09;
+  --color-surface: #111110;
+  --color-surface-raised: #191918;
+  --color-border: #2a2926;
+  --color-border-hover: #3d3b36;
+
+  /* Text — high contrast on deep blacks */
+  --color-text: #ededec;
+  --color-text-secondary: #8b877f;
+  --color-text-tertiary: #55524b;
+  --color-text-inverse: var(--color-neutral-950);
+  --color-text-accent: var(--color-accent-400);
+  --color-text-error: #d98888;
+
+  /* Semantic backgrounds — very dark tinted */
+  --color-success-light: #0a1a10;
+  --color-warning-light: #1a1308;
+  --color-error-light: #1a0e0e;
+
+  /* Semantic — muted for dark mode */
+  --color-success: #5daa7d;
+  --color-warning: #cda05a;
+  --color-error: #d07070;
+
+  /* Shadows — near-invisible on deep dark, rely on border contrast */
+  --shadow-xs:
+    0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-sm:
+    0 1px 2px rgba(0, 0, 0, 0.6),
+    0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md:
+    0 2px 4px rgba(0, 0, 0, 0.5),
+    0 4px 8px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg:
+    0 4px 6px rgba(0, 0, 0, 0.5),
+    0 10px 20px -2px rgba(0, 0, 0, 0.5);
+  --shadow-xl:
+    0 8px 10px rgba(0, 0, 0, 0.5),
+    0 20px 40px -4px rgba(0, 0, 0, 0.6);
+  --shadow-focus:
+    0 0 0 3px rgba(255, 255, 255, 0.06);
+}

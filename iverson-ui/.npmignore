@@ -1,0 +1,5 @@
+index.html
+node_modules
+.git
+.DS_Store
+vite.config.js

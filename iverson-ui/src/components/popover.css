@@ -1,0 +1,93 @@
+/* ========================================================================
+   @iverson/ui — Popover
+   Rich tooltip-like container that can hold forms/actions
+   ======================================================================== */
+
+.popover {
+  position: relative;
+  display: inline-flex;
+}
+
+.popover-content {
+  position: absolute;
+  bottom: calc(100% + var(--space-2));
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  min-width: 200px;
+  max-width: 320px;
+  padding: var(--space-3);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-dropdown);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity var(--duration-fast) var(--ease-default),
+    transform var(--duration-fast) var(--ease-default);
+}
+
+.popover.open .popover-content {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+/* Placement variants */
+.popover-bottom .popover-content {
+  bottom: auto;
+  top: calc(100% + var(--space-2));
+  transform: translateX(-50%) translateY(4px);
+}
+
+.popover-bottom.open .popover-content {
+  transform: translateX(-50%) translateY(0);
+}
+
+.popover-start .popover-content {
+  left: 0;
+  transform: translateX(0) translateY(-4px);
+}
+
+.popover-start.open .popover-content {
+  transform: translateX(0) translateY(0);
+}
+
+.popover-end .popover-content {
+  left: auto;
+  right: 0;
+  transform: translateX(0) translateY(-4px);
+}
+
+.popover-end.open .popover-content {
+  transform: translateX(0) translateY(0);
+}
+
+.popover-title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+.popover-text {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+/* -----------------------------------------------------------------------
+   Dark mode
+   ----------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .popover-content {
+    background-color: var(--color-surface-raised);
+    border-color: var(--color-border);
+  }
+}
+
+[data-theme="dark"] .popover-content {
+  background-color: var(--color-surface-raised);
+  border-color: var(--color-border);
+}

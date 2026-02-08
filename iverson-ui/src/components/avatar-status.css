@@ -1,0 +1,65 @@
+/* ========================================================================
+   @iverson/ui — Avatar Status
+   Status indicators (online/offline/busy) on avatars
+   ======================================================================== */
+
+.avatar-status {
+  position: relative;
+  display: inline-flex;
+}
+
+.avatar-status .avatar {
+  display: flex;
+}
+
+.avatar-status-dot {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-surface);
+}
+
+/* Status colors */
+.avatar-status-online .avatar-status-dot {
+  background-color: var(--color-success);
+}
+
+.avatar-status-offline .avatar-status-dot {
+  background-color: var(--color-neutral-400);
+}
+
+.avatar-status-busy .avatar-status-dot {
+  background-color: var(--color-error);
+}
+
+.avatar-status-away .avatar-status-dot {
+  background-color: var(--color-warning);
+}
+
+/* Size adjustments for small avatars */
+.avatar-status:has(.avatar-sm) .avatar-status-dot {
+  width: 8px;
+  height: 8px;
+}
+
+/* Size adjustments for large avatars */
+.avatar-status:has(.avatar-lg) .avatar-status-dot {
+  width: 12px;
+  height: 12px;
+}
+
+/* -----------------------------------------------------------------------
+   Dark mode
+   ----------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .avatar-status-dot {
+    border-color: var(--color-surface);
+  }
+}
+
+[data-theme="dark"] .avatar-status-dot {
+  border-color: var(--color-surface);
+}

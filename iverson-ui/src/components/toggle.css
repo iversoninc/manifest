@@ -1,0 +1,111 @@
+/* ========================================================================
+   @iverson/ui — Toggle / Switch
+   Hidden checkbox + styled label
+   Usage: <label class="toggle"><input type="checkbox" /><span></span></label>
+   ======================================================================== */
+
+.toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle span {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  background-color: var(--color-neutral-200);
+  border-radius: var(--radius-full);
+  transition:
+    background-color var(--duration-fast) var(--ease-default);
+}
+
+.toggle span::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-white);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-xs);
+  transition:
+    transform var(--duration-fast) var(--ease-default);
+}
+
+/* Checked state */
+.toggle input:checked + span {
+  background-color: var(--color-neutral-900);
+}
+
+.toggle input:checked + span::after {
+  transform: translateX(16px);
+}
+
+/* Disabled */
+.toggle input:disabled + span {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.toggle:has(input:disabled) {
+  cursor: not-allowed;
+}
+
+/* -----------------------------------------------------------------------
+   Small
+   ----------------------------------------------------------------------- */
+.toggle-sm span {
+  width: 28px;
+  height: 16px;
+}
+
+.toggle-sm span::after {
+  width: 12px;
+  height: 12px;
+}
+
+.toggle-sm input:checked + span::after {
+  transform: translateX(12px);
+}
+
+/* -----------------------------------------------------------------------
+   Dark mode
+   ----------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .toggle span {
+    background-color: var(--color-neutral-700);
+  }
+  :root:not([data-theme="light"]) .toggle input:checked + span {
+    background-color: var(--color-neutral-100);
+  }
+  :root:not([data-theme="light"]) .toggle span::after {
+    background-color: var(--color-neutral-950);
+  }
+  :root:not([data-theme="light"]) .toggle input:checked + span::after {
+    background-color: var(--color-neutral-950);
+  }
+}
+
+[data-theme="dark"] .toggle span {
+  background-color: var(--color-neutral-700);
+}
+[data-theme="dark"] .toggle input:checked + span {
+  background-color: var(--color-neutral-100);
+}
+[data-theme="dark"] .toggle span::after {
+  background-color: var(--color-neutral-950);
+}
+[data-theme="dark"] .toggle input:checked + span::after {
+  background-color: var(--color-neutral-950);
+}

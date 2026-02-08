@@ -1,0 +1,99 @@
+/* ========================================================================
+   @iverson/ui — Accordion
+   Expandable content sections using native <details>/<summary>
+   ======================================================================== */
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.accordion-item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.accordion-item:last-child {
+  border-bottom: none;
+}
+
+.accordion-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  list-style: none;
+  transition: background-color var(--duration-fast) var(--ease-default);
+}
+
+.accordion-trigger::-webkit-details-marker {
+  display: none;
+}
+
+.accordion-trigger::marker {
+  display: none;
+  content: '';
+}
+
+.accordion-trigger:hover {
+  background-color: var(--color-neutral-25);
+}
+
+.accordion-chevron {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--color-text-tertiary);
+  transition: transform var(--duration-fast) var(--ease-default);
+}
+
+.accordion-item[open] .accordion-chevron {
+  transform: rotate(180deg);
+}
+
+.accordion-content {
+  padding: 0 var(--space-4) var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+/* -----------------------------------------------------------------------
+   Borderless variant
+   ----------------------------------------------------------------------- */
+.accordion-flush {
+  border: none;
+  border-radius: 0;
+}
+
+.accordion-flush .accordion-item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* -----------------------------------------------------------------------
+   Dark mode
+   ----------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .accordion {
+    border-color: var(--color-border);
+  }
+  :root:not([data-theme="light"]) .accordion-trigger:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+}
+
+[data-theme="dark"] .accordion {
+  border-color: var(--color-border);
+}
+[data-theme="dark"] .accordion-trigger:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}

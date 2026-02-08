@@ -1,0 +1,38 @@
+{
+  "name": "@iverson/ui",
+  "version": "0.1.0",
+  "description": "Zero-dependency vanilla CSS + JS component library",
+  "type": "module",
+  "main": "dist/iverson.js",
+  "module": "dist/iverson.js",
+  "style": "dist/iverson.css",
+  "exports": {
+    ".": {
+      "import": "./dist/iverson.js",
+      "default": "./dist/iverson.js"
+    },
+    "./css": "./dist/iverson.css"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:demo": "vite build --config vite.demo.config.js",
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "css",
+    "ui",
+    "components",
+    "design-system",
+    "vanilla"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^7.2.4"
+  }
+}
